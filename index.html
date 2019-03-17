@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="style.css">
 </head>
-<body onload="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'addend1', 'addend2')">
+<body onload="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')">
 <h1 >WD_PS2 Javascript + RegExp</h1>
 <h2 >Task 1. Sum numbers ends 2,3,7 </h2>
 <form class="sum-form" id="sum-form">
@@ -22,7 +22,7 @@
              title="please enter only integer number"
              oninput="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')">
     </div>
-    <button id="sum-form__btn" type="button" class='form__btn'
+    <button id="sum-form__btn" type="button" class='form__btn btn--unvisible'
             onclick="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')"
             disabled> Sum ..2..3..7
     </button>
@@ -34,22 +34,22 @@
 
 
 <h2 >Task 2. Date transformation</h2>
-<form class="time-trans-form" id="timeTransForm">
+<form class="time-trans-form" id="time-form">
   <fieldset>
     <legend >Transform time from seconds to hh:mm:ss & vice-versa </legend>
     <div>
-      <label for="timeInSecond" title="please enter time in second">Enter time in second:</label>
-      <input type="text" class="time-trans-form__input" id="timeInSecond" placeholder="enter time in second"
+      <label for="time-form__seconds-input" title="please enter time in second">Enter time in second:</label>
+      <input type="text" class="time-form__seconds-input" id="time-form__seconds-input" placeholder="enter time in second"
              title="enter time in second"
-             oninput="validationAndTaskRun(transferFromSecond, /^-?\d+$/, 'timeTransFormBtn', 'timeInSecond' )">
+             oninput="transferFromSecond(/^-?\d+$/, 'time-form__hms-input', 'time-form__seconds-input' )">
     </div>
     <div>
-      <label for="timeInHMS" title="please enter time in hh:mm:ss">Enter time in hh:mm:ss:</label>
-      <input type="text" class="time-trans-form__input" id="timeInHMS" placeholder="enter second addend"
+      <label for="time-form__hms-input" title="please enter time in hh:mm:ss">Enter time in hh:mm:ss:</label>
+      <input type="text" class="time-form__hms-input" id="time-form__hms-input" placeholder="enter second addend"
              title="please enter only integer number"
-             oninput="validationAndTaskRun(test, /^-?\d+$/, 'timeTransFormBtn', 'timeInSecond')">
+             oninput="transferFromSecond(/^-?\d+$/, 'time-form__seconds-input', 'time-form__hms-input' )">
     </div>
-    <button id="timeTransFormBtn" type="button" class='time-trans-form__btn' onclick="getSum()" disabled> Sum ..2..3..7</button>
+    <button id="time-form__btn" type="button" class='btn--unvisible time-form__btn' onclick="getSum()" disabled>time</button>
   </fieldset>
 </form>
 <div>

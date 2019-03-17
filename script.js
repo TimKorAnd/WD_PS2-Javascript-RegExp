@@ -59,11 +59,12 @@ function validation(btnId, regTemplate, inputsId){
     return isAllInputsValid;
 }
 
-function transferFromSecond(inputId){
+function transferFromSecond(regTime, outputId, inputId){
     const timeInSecond = document.getElementById(inputId).value;
-    const resultTimeTransform = document.getElementById('resultTimeTransform');
+    const resultTimeTransform = document.getElementById(outputId);
     const date = new Date(null);
-    resultTimeTransform.innerText = timeInSecond;
+    date.setSeconds(timeInSecond);
+    resultTimeTransform.value =  date.toISOString().substr(11, 8);
 
 }
 

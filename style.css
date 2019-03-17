@@ -4,6 +4,6 @@
 .sum-form__input--valid {
   color: black;
 }
-.form__btn {
+.btn--unvisible {
   visibility: hidden;
 }
