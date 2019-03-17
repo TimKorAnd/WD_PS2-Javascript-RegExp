@@ -1,15 +1,9 @@
-const NUMBER_VALID_REGEX = /^-?\d+$/;
+/* CONSTANTS */
+const NUMBER_VALID_REGEX = /^-?\d+$/;   //for task_1 regexp
+
 
 /* between two specified numbers, sum numbers only if they are ending for 2, 3, 7*/
-function getSum(inputsId) {
-
-   /* const sumForm = document.getElementById("sumForm");
-    const addendFirst = sumForm[1].value;
-    const addendSecond = sumForm[2].value;*/
-    const addendFirst = document.getElementById(inputsId[0]).value;
-    const addendSecond = document.getElementById(inputsId[1]).value;
-    const resultOutput = document.getElementById("resultOutput");
-
+function getSum(regTemplate, btnId, ...inputsId) {
     /*sum specified numbers in range*/
     let sumSpecNum = (a , b ) => {
         if (a === '' || b === '') {
@@ -18,25 +12,17 @@ function getSum(inputsId) {
         if (isNaN(a) || isNaN(b)) {
             return "please, enter correct data for sum calculate"
         }
-
-       /* if (const errors = hasErrors()) {
-            displayErrors(errors);
-            return;
-        }*/
-
         a = parseInt(a);
         b = parseInt(b);
         let minNum = a < b ? a : b;
-        b = a + b - minNum;
-
-        a = 0;
-
-        for (let i = minNum; i <= b; i++){
+        let maxNum = a + b - minNum;
+        let sum = 0;
+        for (let i = minNum; i <= maxNum; i++){
             if (isSpecNum(i)){
-               a += i;
+               sum += i;
             }
         }
-        return a;
+        return sum;
     };
 
     /*is number end with 2 or 3 or 7*/
@@ -45,11 +31,16 @@ function getSum(inputsId) {
         return (num === 2) || (num === 3) || (num === 7);
 
     };
-    resultOutput.innerText = sumSpecNum(addendFirst, addendSecond);
+
+    validation(btnId, NUMBER_VALID_REGEX, inputsId);
+
+    const numberFirst = document.getElementById(inputsId[0]).value;
+    const numberSecond = document.getElementById(inputsId[1]).value;
+    const resultOutput = document.getElementById('sum-form__result-output');
+    resultOutput.innerText = sumSpecNum(numberFirst, numberSecond);
 }
-
-
-function validationAndTaskRun(func, regTemplate, btnId, ...inputsId){
+/*validation */
+function validation(btnId, regTemplate, inputsId){
 
     let isAllInputsValid = true;
 
@@ -65,9 +56,7 @@ function validationAndTaskRun(func, regTemplate, btnId, ...inputsId){
     });
 
     document.getElementById(btnId).disabled = !isAllInputsValid;
-    /*if (isAllInputsValid && func !== null)*/ func(inputsId);
-
-
+    return isAllInputsValid;
 }
 
 function transferFromSecond(inputId){

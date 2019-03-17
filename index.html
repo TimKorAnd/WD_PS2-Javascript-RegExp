@@ -4,30 +4,34 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="style.css">
 </head>
-<body onload="validationAndTaskRun(getSum, /^-?\d+$/, 'sum-form__btn', 'addend1', 'addend2')">
+<body onload="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'addend1', 'addend2')">
 <h1 >WD_PS2 Javascript + RegExp</h1>
 <h2 >Task 1. Sum numbers ends 2,3,7 </h2>
-<form class="sum-form" id="sumForm">
+<form class="sum-form" id="sum-form">
   <fieldset>
     <legend >Calc sum integer nums in range, that ends 2,3,7</legend>
     <div>
-      <label for="addend1" title="please enter only integer number">Enter first addend:</label>
-      <input type="text" class="sum-form__input" id="addend1" placeholder="enter first addend"
+      <label for="sum-form__input-1" title="please enter only integer number">Enter first addend:</label>
+      <input type="text" class="sum-form__input" id="sum-form__input-1" placeholder="enter first addend"
              title="please enter only integer number"
-             oninput="validationAndTaskRun(getSum, NUMBER_VALID_REGEX, 'sum-form__btn', 'addend1', 'addend2')">
+             oninput="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')">
     </div>
     <div>
-      <label for="addend2" title="please enter only integer number">Enter second addend:</label>
-      <input type="text" class="sum-form__input" id="addend2" placeholder="enter second addend"
+      <label for="sum-form__input-2" title="please enter only integer number">Enter second addend:</label>
+      <input type="text" class="sum-form__input" id="sum-form__input-2" placeholder="enter second addend"
              title="please enter only integer number"
-             oninput="validationAndTaskRun(getSum, NUMBER_VALID_REGEX, 'sum-form__btn', 'addend1', 'addend2')">
+             oninput="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')">
     </div>
-    <button id="sum-form__btn" type="button" class='form__btn' onclick="getSum()" disabled> Sum ..2..3..7</button>
+    <button id="sum-form__btn" type="button" class='form__btn'
+            onclick="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')"
+            disabled> Sum ..2..3..7
+    </button>
+    <div>
+      <p id="sum-form__result-output">please, enter data in empty field</p>
+    </div>
   </fieldset>
 </form>
-<div>
-  <p id="resultOutput">please, enter data in empty field</p>
-</div>
+
 
 <h2 >Task 2. Date transformation</h2>
 <form class="time-trans-form" id="timeTransForm">
