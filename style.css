@@ -1,0 +1,9 @@
+.sum-form__input--invalid {
+  color: red;
+}
+.sum-form__input--valid {
+  color: black;
+}
+.form__btn {
+  visibility: hidden;
+}

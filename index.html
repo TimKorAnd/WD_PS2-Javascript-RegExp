@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="validationAndTaskRun(getSum, /^-?\d+$/, 'sum-form__btn', 'addend1', 'addend2')">
+<h1 >WD_PS2 Javascript + RegExp</h1>
+<h2 >Task 1. Sum numbers ends 2,3,7 </h2>
+<form class="sum-form" id="sumForm">
+  <fieldset>
+    <legend >Calc sum integer nums in range, that ends 2,3,7</legend>
+    <div>
+      <label for="addend1" title="please enter only integer number">Enter first addend:</label>
+      <input type="text" class="sum-form__input" id="addend1" placeholder="enter first addend"
+             title="please enter only integer number"
+             oninput="validationAndTaskRun(getSum, NUMBER_VALID_REGEX, 'sum-form__btn', 'addend1', 'addend2')">
+    </div>
+    <div>
+      <label for="addend2" title="please enter only integer number">Enter second addend:</label>
+      <input type="text" class="sum-form__input" id="addend2" placeholder="enter second addend"
+             title="please enter only integer number"
+             oninput="validationAndTaskRun(getSum, NUMBER_VALID_REGEX, 'sum-form__btn', 'addend1', 'addend2')">
+    </div>
+    <button id="sum-form__btn" type="button" class='form__btn' onclick="getSum()" disabled> Sum ..2..3..7</button>
+  </fieldset>
+</form>
+<div>
+  <p id="resultOutput">please, enter data in empty field</p>
+</div>
+
+<h2 >Task 2. Date transformation</h2>
+<form class="time-trans-form" id="timeTransForm">
+  <fieldset>
+    <legend >Transform time from seconds to hh:mm:ss & vice-versa </legend>
+    <div>
+      <label for="timeInSecond" title="please enter time in second">Enter time in second:</label>
+      <input type="text" class="time-trans-form__input" id="timeInSecond" placeholder="enter time in second"
+             title="enter time in second"
+             oninput="validationAndTaskRun(transferFromSecond, /^-?\d+$/, 'timeTransFormBtn', 'timeInSecond' )">
+    </div>
+    <div>
+      <label for="timeInHMS" title="please enter time in hh:mm:ss">Enter time in hh:mm:ss:</label>
+      <input type="text" class="time-trans-form__input" id="timeInHMS" placeholder="enter second addend"
+             title="please enter only integer number"
+             oninput="validationAndTaskRun(test, /^-?\d+$/, 'timeTransFormBtn', 'timeInSecond')">
+    </div>
+    <button id="timeTransFormBtn" type="button" class='time-trans-form__btn' onclick="getSum()" disabled> Sum ..2..3..7</button>
+  </fieldset>
+</form>
+<div>
+  <p id="resultTimeTransform">please, enter data in empty field</p>
+</div>
+
+
+
+<button type="button"
+        onclick="f()">
+  Click me to display Date and Time.</button>
+
+<p id="demo"></p>
+<script src="script.js"></script>
+
+</body>
+</html>
