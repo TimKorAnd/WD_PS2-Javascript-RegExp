@@ -41,28 +41,51 @@
       <label for="time-form__seconds-input" title="please enter time in second">Time in second:</label>
       <input type="text" class="time-form__seconds-input" id="time-form__seconds-input" placeholder="enter time in second"
              title="enter time in second"
-             oninput="transferFromSecond(TIME_IN_SECOND_VALID_REGEX, 'time-form__hms-input', 'time-form__seconds-input' )"
+             oninput="outputInHMS(TIME_IN_SECOND_VALID_REGEX, 'time-form__hms-input', 'time-form__seconds-input' )"
              onfocus="validation('time-form__btn', TIME_IN_SECOND_VALID_REGEX, 'time-form__seconds-input')"
-             onkeypress="if (enterPressed(event)) {transferFromSecond(TIME_IN_SECOND_VALID_REGEX, 'time-form__hms-input', 'time-form__seconds-input')}">
+             onkeypress="if (enterPressed(event)) {outputInHMS(TIME_IN_SECOND_VALID_REGEX, 'time-form__hms-input', 'time-form__seconds-input')}">
     </div>
     <div>
       <label for="time-form__hms-input" title="please enter time in hh:mm:ss">Time in hh:mm:ss:</label>
       <input type="text" class="time-form__hms-input" id="time-form__hms-input" placeholder="enter time in hh:mm:ss"
              title="please enter correct hh:mm:ss"
-             oninput="transferFromHMS(TIME_IN_HMS_VALID_REGEX, 'time-form__seconds-input', 'time-form__hms-input')"
+             oninput="outputInSeconds(TIME_IN_HMS_VALID_REGEX, 'time-form__seconds-input', 'time-form__hms-input')"
              onfocus="validation('time-form__btn', TIME_IN_HMS_VALID_REGEX, 'time-form__hms-input')"
-             onkeypress="if (enterPressed(event)) {transferFromHMS(TIME_IN_HMS_VALID_REGEX, 'time-form__seconds-input', 'time-form__hms-input')}">
+             onkeypress="if (enterPressed(event)) {outputInSeconds(TIME_IN_HMS_VALID_REGEX, 'time-form__seconds-input', 'time-form__hms-input')}">
     </div>
     <button id="time-form__btn" type="button" class='btn--unvisible time-form__btn'
             onclick="" disabled>time</button>
     <div>
-      <p id="result-time-transform"> Data interchange between two input field</p>
+      <p id="result-time-transform"> Data interchange between two input field only</p>
     </div>
   </fieldset>
 </form>
 <!--///////////////////////////////-->
 <h2 >Task 3. Calculate the time span between two date </h2>
 <form class="time-span-form" id="time-span">
+  <fieldset>
+    <legend > </legend>
+    <div>
+      <label for="datetime-span-form__input-1" title="please enter date & time">Date & time 1:</label>
+      <input type="datetime-local" class=date"time-span-form__input" id="datetime-span-form__input-1" placeholder="enter first date & time"
+             title="date & time in YY:MM:DD:HH:MM:SS"
+             oninput="" onblur="">
+    </div>
+    <div>
+      <label for="datetime-span-form__input-2" title="please enter date & time">Date & time 2:</label>
+      <input type="datetime-local" class="datetime-form__hms-input" id="datetime-span-form__input-2" placeholder="enter second date & time"
+             title="date & time in YY:MM:DD:HH:MM:SS"
+             oninput="" onblur="">
+    </div>
+    <button id="datetime-span-form__btn" type="button" class='btn--unvisible datetime-span-form__btn'
+            onclick="" disabled>time</button>
+    <div>
+      <p id="datetime-span-result"> Data interchange between two input field only. </p>
+    </div>
+  </fieldset>
+</form>
+
+<!--<form class="time-span-form" id="time-span">
   <fieldset>
     <legend > </legend>
     <div>
@@ -77,13 +100,13 @@
              title="date in YY:MM:DD:HH:MM:SS"
              oninput="" onblur="">
     </div>
-    <button id="time-span-form__btn" type="button" class='btn--unvisible time-span-form__btn'
+    <button id="time-span-form__btn" type="button" class='btn&#45;&#45;unvisible time-span-form__btn'
             onclick="" disabled>time</button>
     <div>
       <p id="result-time-span"> Data interchange between two input field</p>
     </div>
   </fieldset>
-</form>
+</form>-->
 
 
 
