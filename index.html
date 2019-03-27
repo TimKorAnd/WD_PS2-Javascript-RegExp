@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="style.css">
 </head>
-<body onload="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')">
+<body onload="outputSpecifiedNumbersSum('sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')">
 <h1 >WD_PS2 Javascript + RegExp</h1>
 <h2 >Task 1. Sum numbers ends 2,3,7 </h2>
 <form class="sum-form" id="sum-form">
@@ -14,16 +14,16 @@
       <label for="sum-form__input-1" title="please enter only integer number">Enter first addend:</label>
       <input type="text" class="sum-form__input" id="sum-form__input-1" placeholder="enter first addend"
              title="please enter only integer number"
-             oninput="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')">
+             oninput="outputSpecifiedNumbersSum('sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')">
     </div>
     <div>
       <label for="sum-form__input-2" title="please enter only integer number">Enter second addend:</label>
       <input type="text" class="sum-form__input" id="sum-form__input-2" placeholder="enter second addend"
              title="please enter only integer number"
-             oninput="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')">
+             oninput="outputSpecifiedNumbersSum('sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')">
     </div>
-    <button id="sum-form__btn" type="button" class='form__btn btn--unvisible'
-            onclick="getSum(NUMBER_VALID_REGEX, 'sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')"
+    <button id="sum-form__btn" type="button" class="form__btn btn--unvisible"
+            onclick="outputSpecifiedNumbersSum('sum-form__btn', 'sum-form__input-1', 'sum-form__input-2')"
             disabled> Sum ..2..3..7
     </button>
     <div>
@@ -41,19 +41,19 @@
       <label for="time-form__seconds-input" title="please enter time in second">Time in second:</label>
       <input type="text" class="time-form__seconds-input" id="time-form__seconds-input" placeholder="enter time in second"
              title="enter time in second"
-             oninput="outputInHMS(TIME_IN_SECOND_VALID_REGEX, 'time-form__hms-input', 'time-form__seconds-input' )"
+             oninput="outputInHMS('time-form__hms-input', 'time-form__seconds-input' )"
              onfocus="validation('time-form__btn', TIME_IN_SECOND_VALID_REGEX, 'time-form__seconds-input')"
-             onkeypress="if (enterPressed(event)) {outputInHMS(TIME_IN_SECOND_VALID_REGEX, 'time-form__hms-input', 'time-form__seconds-input')}">
+             onkeypress="if (enterPressed(event)) {outputInHMS('time-form__hms-input', 'time-form__seconds-input')}">
     </div>
     <div>
       <label for="time-form__hms-input" title="please enter time in hh:mm:ss">Time in hh:mm:ss:</label>
       <input type="text" class="time-form__hms-input" id="time-form__hms-input" placeholder="enter time in hh:mm:ss"
              title="please enter correct hh:mm:ss"
-             oninput="outputInSeconds(TIME_IN_HMS_VALID_REGEX, 'time-form__seconds-input', 'time-form__hms-input')"
+             oninput="outputInSeconds('time-form__seconds-input', 'time-form__hms-input')"
              onfocus="validation('time-form__btn', TIME_IN_HMS_VALID_REGEX, 'time-form__hms-input')"
-             onkeypress="if (enterPressed(event)) {outputInSeconds(TIME_IN_HMS_VALID_REGEX, 'time-form__seconds-input', 'time-form__hms-input')}">
+             onkeypress="if (enterPressed(event)) {outputInSeconds('time-form__seconds-input', 'time-form__hms-input')}">
     </div>
-    <button id="time-form__btn" type="button" class='btn--unvisible time-form__btn'
+    <button id="time-form__btn" type="button" class="btn--unvisible time-form__btn"
             onclick="" disabled>time</button>
     <div>
       <p id="result-time-transform"> Data interchange between two input field only</p>
@@ -68,14 +68,14 @@
     <div>
       <label for="datetime-span-form__input-1" title="please enter date & time">Date & time 1:</label>
       <input type="datetime-local" class=date"time-span-form__input" id="datetime-span-form__input-1" placeholder="enter first date & time"
-             title="date & time in YY:MM:DD:HH:MM:SS"
-             oninput="" onblur="">
+             title="date & time in YY:MM:DD:HH:MM:SS" value="2018-01-01T00:01"
+             oninput="outputSpan('datetime-span-form__input-1', 'datetime-span-form__input-2')" onblur="">
     </div>
     <div>
       <label for="datetime-span-form__input-2" title="please enter date & time">Date & time 2:</label>
       <input type="datetime-local" class="datetime-form__hms-input" id="datetime-span-form__input-2" placeholder="enter second date & time"
-             title="date & time in YY:MM:DD:HH:MM:SS"
-             oninput="" onblur="">
+             title="date & time in YY:MM:DD:HH:MM:SS" value="2019-07-15T23:59"
+             oninput="outputSpan('datetime-span-form__input-1', 'datetime-span-form__input-2')" onblur="">
     </div>
     <button id="datetime-span-form__btn" type="button" class='btn--unvisible datetime-span-form__btn'
             onclick="" disabled>time</button>

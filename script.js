@@ -1,13 +1,15 @@
 /* CONSTANTS */
-const NUMBER_VALID_REGEX = /^-?\d+$/;   //for task_1 regexp
+  //for task_1 regexp
 const TIME_IN_SECOND_VALID_REGEX = /^\d+$/;   //for task_2 seconds regexp
 const TIME_IN_HMS_VALID_REGEX = /^((0(?=\d)|1(?=\d)|2(?=[0-4]))\d):([0-5](?=\d)\d):([0-5](?=\d)\d)$/;   //for task_2 HMS regexp
+
 
 const SECONDS_IN_HMS = [60 * 60, 60, 1 ];
 
 
 /* between two specified numbers, sum numbers only if they are ending for 2, 3, 7*/
-function getSum(regTemplate, btnId, ...inputsId) {
+function outputSpecifiedNumbersSum(btnId, ...inputsId) {
+    const NUMBER_VALID_REGEX = /^-?\d+$/;
     /*sum specified numbers in range*/
     let sumSpecNum = (a , b ) => {
         if (a === '' || b === '') {
@@ -76,10 +78,10 @@ function validation(btnId, regTemplate, inputsId){
 }
 
 /*output in hms*/
-function outputInHMS(regTime, outputId, inputId){
+function outputInHMS(outputId, inputId){
     let timeInSecond = document.getElementById(inputId).value;
     const resultTimeTransform = document.getElementById(outputId);
-    if (!validation('time-form__btn', regTime, [inputId])){
+    if (!validation('time-form__btn', TIME_IN_SECOND_VALID_REGEX, [inputId])){
         resultTimeTransform.placeholder =  'enter correct seconds';
         resultTimeTransform.className = 'sum-form__input--invalid';
         return;
@@ -105,11 +107,11 @@ function outputInHMS(regTime, outputId, inputId){
 }
 
 /*output seconds*/
-function outputInSeconds(regHMS, outputId, inputId){
+function outputInSeconds(outputId, inputId){
 
     const timeInSecond = document.getElementById(inputId).value;
     const resultTimeTransform = document.getElementById(outputId);
-    if (!validation('time-form__btn', regHMS, [inputId])){
+    if (!validation('time-form__btn', TIME_IN_HMS_VALID_REGEX, [inputId])){
         resultTimeTransform.placeholder = 'enter correct hh:mm:ss';
         resultTimeTransform.className = 'sum-form__input--invalid';
         return;
@@ -133,9 +135,70 @@ function enterPressed(event) {
     return (event.which == 13 || event.keyCode == 13);
 }
 
-function test(){
+/*output a span between two date*/
+function outputSpan (inputFirstId, inputSecondId){
+    const DATETIME_VALID_REGEX = /^.+$/;   //for task_3 locale datetime regexp
+    let dayInMonth = 31;
+    const TIME_UNIT_ARRAY = [12*dayInMonth*24*60*60*1000,dayInMonth*24*60*60*1000,24*60*60*1000,60*60*1000,60*1000,1000,1];
+    const DHM_S_MS_UNIT_ARRAY = [24*60*60*1000,60*60*1000,60*1000,1000,1];
+    const DAY_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+
+    if (!validation('datetime-span-form__btn', DATETIME_VALID_REGEX, [inputFirstId, inputSecondId])){
+        document.getElementById('datetime-span-result').className = 'sum-form__input--invalid'
+        return;
+    }
+    document.getElementById('datetime-span-result').className = 'sum-form__input--valid';
+    let date1 = new Date(document.getElementById(inputFirstId).value);
+    let date2 = new Date(document.getElementById(inputSecondId).value);
+
+    /*require date2 > date1 */
+    if (date1 > date2) {
+        [date1, date2] = [date2, date1];
+    }
+    let dif = date2 - date1;
+    console.log('min date' + date1); //TODO remove before prod
+
+    /*count days ... ms*/
+    let resultSpan = DHM_S_MS_UNIT_ARRAY.map((unit,i)=>{
+        let tempDif = dif;
+        dif -= (Math.trunc(tempDif / unit) * unit);
+        return(Math.trunc(tempDif / unit));
+    });
+    console.log(resultSpan); //TODO remove before prod
+
+    let currentMonth = date1.getMonth();
+    let resultMonth = 0, resultYears = 0;
+
+    while (resultSpan[0] >= DAY_IN_MONTH[currentMonth]){
+        resultSpan[0] -= DAY_IN_MONTH[currentMonth];
+        resultMonth++;
+        if (resultMonth === 12) {
+            resultYears++;
+            resultMonth = 0;
+        }
+        currentMonth = (currentMonth === (DAY_IN_MONTH.length - 1)) ? 0 : ++currentMonth;
+    }
+    resultSpan.splice(0,0, resultYears, resultMonth);
+    console.log(resultSpan);
+
+
+    console.log('+++++++++++++++++++++++++++++++');
+
+
+    const result = new Date(0,0,0,0,0,0,dif);
+    console.log(result);
+
+
+
+}
+
+function test(inputId){
     const obj = {name:"tim", age:39};
-    console.log(typeof obj);
-    alert('hello');
+    obj.passion = 'codding';
+
+    console.log(document.getElementById('datetime-span-form__input-2') .value);
+    console.log(ms);
+    //alert(dateTimeInput.value);
 }
 
