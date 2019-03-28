@@ -140,12 +140,12 @@ function outputSpan (inputFirstId, inputSecondId){
     const DATETIME_VALID_REGEX = /^.+$/;   //for task_3 locale datetime regexp
     const TIME_UNITS_IN_MS_ARRAY = [24*60*60*1000,60*60*1000,60*1000,1000,1];
     const MONTH_IN_YEAR = 11;
-    const MEASURE_UNITS = [['лет','год','года','года','года','лет','лет','лет','лет','лет'],
-                            ['месяцев','месяц','месяца','месяца','месяца','месяцев','месяцев','месяцев','месяцев','месяцев',],
-                            ['дней','день','дня','дня','дня','дней','дней','дней','дней','дней',],
-                            ['часов','час','часа','часа','часа','часов','часов','часов','часов','часов',],
-                            ['минут','минута','минуты','минуты','минуты','минут','минут','минут','минут','минут',],
-                            ['секунд','секунда','секунды','секунды','секунды','секунд','секунд','секунд','секунд','секунд',]];
+    const MEASURE_UNITS = [['лет','год','года','года','года'],
+                            ['месяцев','месяц','месяца','месяца','месяца'],
+                            ['дней','день','дня','дня','дня'],
+                            ['часов','час','часа','часа','часа'],
+                            ['минут','минута','минуты','минуты','минуты'],
+                            ['секунд','секунда','секунды','секунды','секунды']];
 
     if (!validation('datetime-span-form__btn', DATETIME_VALID_REGEX, [inputFirstId, inputSecondId])){
         document.getElementById('datetime-span-result').className = 'sum-form__input--invalid'
@@ -187,18 +187,20 @@ function outputSpan (inputFirstId, inputSecondId){
     /*add measure units for output*/
     resultSpan.forEach((timeUnit, i) => {
         let str = '';
+        let j  = parseInt(timeUnit.toString().substr(-1));
         if (i === 6) {
             str = 'мили';
             --i;
         }
-        if (timeUnit > 10 && timeUnit < 20) {
-            str += MEASURE_UNITS[i][0];
-        } else {
-            str += MEASURE_UNITS[i][parseInt(timeUnit.toString().substr(-1))];
+        if ((timeUnit > 10 && timeUnit < 20) || (j > 4)) {
+            j = 0;
         }
+        str += MEASURE_UNITS[i][j];
+
 
         console.log((resultSpan[i].toString().concat(' ',str)));
     });
+    console.log('************************');
 }
 
 function test(inputId){
