@@ -145,8 +145,7 @@ function outputSpan (inputFirstId, inputSecondId){
                             ['дней','день','дня','дня','дня','дней','дней','дней','дней','дней',],
                             ['часов','час','часа','часа','часа','часов','часов','часов','часов','часов',],
                             ['минут','минута','минуты','минуты','минуты','минут','минут','минут','минут','минут',],
-                            ['секунд','секунда','секунды','секунды','секунды','секунд','секунд','секунд','секунд','секунд',],
-                            ['мили']];
+                            ['секунд','секунда','секунды','секунды','секунды','секунд','секунд','секунд','секунд','секунд',]];
 
     if (!validation('datetime-span-form__btn', DATETIME_VALID_REGEX, [inputFirstId, inputSecondId])){
         document.getElementById('datetime-span-result').className = 'sum-form__input--invalid'
@@ -161,9 +160,6 @@ function outputSpan (inputFirstId, inputSecondId){
         [date1, date2] = [date2, date1];
     }
     let dif = date2 - date1;
-    console.log('min date ' + date1); //TODO remove before prod
-    console.log('max date ' + date2); //TODO remove before prod
-    console.log('dif btw date ' + dif); //TODO remove before prod
 
     /*calculate days ... ms*/
     let resultSpan = TIME_UNITS_IN_MS_ARRAY.map((unit)=>{
@@ -171,8 +167,6 @@ function outputSpan (inputFirstId, inputSecondId){
         dif -= (Math.trunc(tempDif / unit) * unit);
         return(Math.trunc(tempDif / unit));
     });
-
-    console.log(resultSpan); //TODO remove before prod
 
     /*calculate years, months & days from days*/
     let currentMonth = date1.getMonth();
@@ -188,21 +182,23 @@ function outputSpan (inputFirstId, inputSecondId){
         }
         currentMonth = (currentMonth === (MONTH_IN_YEAR)) ? 0 : ++currentMonth;
     }
-
+    /*add years & month in result array*/
     resultSpan.splice(0,0, resultYears, resultMonth);
-    console.log(resultSpan);
-
-
-    console.log('+++++++++++++++++++++++++++++++');
-
-
+    /*add measure units for output*/
     resultSpan.forEach((timeUnit, i) => {
-        let str = MEASURE_UNITS[i][parseInt(timeUnit.toString().substr(-1))];
+        let str = '';
+        if (i === 6) {
+            str = 'мили';
+            --i;
+        }
+        if (timeUnit > 10 && timeUnit < 20) {
+            str += MEASURE_UNITS[i][0];
+        } else {
+            str += MEASURE_UNITS[i][parseInt(timeUnit.toString().substr(-1))];
+        }
+
         console.log((resultSpan[i].toString().concat(' ',str)));
     });
-
-
-
 }
 
 function test(inputId){
