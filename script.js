@@ -138,10 +138,8 @@ function enterPressed(event) {
 /*output a span between two date*/
 function outputSpan (inputFirstId, inputSecondId){
     const DATETIME_VALID_REGEX = /^.+$/;   //for task_3 locale datetime regexp
-    let dayInMonth = 31;
-    const TIME_UNIT_ARRAY = [12*dayInMonth*24*60*60*1000,dayInMonth*24*60*60*1000,24*60*60*1000,60*60*1000,60*1000,1000,1];
-    const DHM_S_MS_UNIT_ARRAY = [24*60*60*1000,60*60*1000,60*1000,1000,1];
-    const DAY_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const TIME_UNITS_IN_MS_ARRAY = [24*60*60*1000,60*60*1000,60*1000,1000,1];
+    const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 
     if (!validation('datetime-span-form__btn', DATETIME_VALID_REGEX, [inputFirstId, inputSecondId])){
@@ -149,35 +147,44 @@ function outputSpan (inputFirstId, inputSecondId){
         return;
     }
     document.getElementById('datetime-span-result').className = 'sum-form__input--valid';
-    let date1 = new Date(document.getElementById(inputFirstId).value);
-    let date2 = new Date(document.getElementById(inputSecondId).value);
+    let date1 = new Date(document.getElementById(inputFirstId).value +'Z');
+    let date2 = new Date(document.getElementById(inputSecondId).value + 'Z');
 
     /*require date2 > date1 */
     if (date1 > date2) {
         [date1, date2] = [date2, date1];
     }
     let dif = date2 - date1;
-    console.log('min date' + date1); //TODO remove before prod
+    console.log('min date ' + date1); //TODO remove before prod
+    console.log('max date ' + date2); //TODO remove before prod
+    console.log('dif btw date ' + dif); //TODO remove before prod
 
-    /*count days ... ms*/
-    let resultSpan = DHM_S_MS_UNIT_ARRAY.map((unit,i)=>{
+    /*calculate days ... ms*/
+    let resultSpan = TIME_UNITS_IN_MS_ARRAY.map((unit)=>{
         let tempDif = dif;
         dif -= (Math.trunc(tempDif / unit) * unit);
         return(Math.trunc(tempDif / unit));
     });
+
     console.log(resultSpan); //TODO remove before prod
 
+    /*calculate years, months & days from days*/
     let currentMonth = date1.getMonth();
-    let resultMonth = 0, resultYears = 0;
+    let currentYear = date1.getFullYear();
+    let resultMonth = 0, resultYears = 0, dayInCurrentMonth = 0;
+    /*calc years*/
+        /*resultYears =  Math.trunc (resultSpan[0] / 365);
+        resultSpan[0] -= resultYears * 365;*/
 
-    while (resultSpan[0] >= DAY_IN_MONTH[currentMonth]){
-        resultSpan[0] -= DAY_IN_MONTH[currentMonth];
+    /*calc month, days in remain*/
+    while (resultSpan[0] >= (dayInCurrentMonth = (new Date(currentYear + resultYears,currentMonth + 1 ,0)).getDate())){
+        resultSpan[0] -= dayInCurrentMonth;
         resultMonth++;
         if (resultMonth === 12) {
             resultYears++;
             resultMonth = 0;
         }
-        currentMonth = (currentMonth === (DAY_IN_MONTH.length - 1)) ? 0 : ++currentMonth;
+        currentMonth = (currentMonth === (DAYS_IN_MONTH.length - 1)) ? 0 : ++currentMonth;
     }
     resultSpan.splice(0,0, resultYears, resultMonth);
     console.log(resultSpan);
