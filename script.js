@@ -139,8 +139,14 @@ function enterPressed(event) {
 function outputSpan (inputFirstId, inputSecondId){
     const DATETIME_VALID_REGEX = /^.+$/;   //for task_3 locale datetime regexp
     const TIME_UNITS_IN_MS_ARRAY = [24*60*60*1000,60*60*1000,60*1000,1000,1];
-    const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
+    const MONTH_IN_YEAR = 11;
+    const MEASURE_UNITS = [['лет','год','года','года','года','лет','лет','лет','лет','лет'],
+                            ['месяцев','месяц','месяца','месяца','месяца','месяцев','месяцев','месяцев','месяцев','месяцев',],
+                            ['дней','день','дня','дня','дня','дней','дней','дней','дней','дней',],
+                            ['часов','час','часа','часа','часа','часов','часов','часов','часов','часов',],
+                            ['минут','минута','минуты','минуты','минуты','минут','минут','минут','минут','минут',],
+                            ['секунд','секунда','секунды','секунды','секунды','секунд','секунд','секунд','секунд','секунд',],
+                            ['мили']];
 
     if (!validation('datetime-span-form__btn', DATETIME_VALID_REGEX, [inputFirstId, inputSecondId])){
         document.getElementById('datetime-span-result').className = 'sum-form__input--invalid'
@@ -171,12 +177,8 @@ function outputSpan (inputFirstId, inputSecondId){
     /*calculate years, months & days from days*/
     let currentMonth = date1.getMonth();
     let currentYear = date1.getFullYear();
-    let resultMonth = 0, resultYears = 0, dayInCurrentMonth = 0;
-    /*calc years*/
-        /*resultYears =  Math.trunc (resultSpan[0] / 365);
-        resultSpan[0] -= resultYears * 365;*/
-
-    /*calc month, days in remain*/
+    let resultMonth = 0, resultYears = 0, dayInCurrentMonth ;
+        /*calc month, days in remain*/
     while (resultSpan[0] >= (dayInCurrentMonth = (new Date(currentYear + resultYears,currentMonth + 1 ,0)).getDate())){
         resultSpan[0] -= dayInCurrentMonth;
         resultMonth++;
@@ -184,8 +186,9 @@ function outputSpan (inputFirstId, inputSecondId){
             resultYears++;
             resultMonth = 0;
         }
-        currentMonth = (currentMonth === (DAYS_IN_MONTH.length - 1)) ? 0 : ++currentMonth;
+        currentMonth = (currentMonth === (MONTH_IN_YEAR)) ? 0 : ++currentMonth;
     }
+
     resultSpan.splice(0,0, resultYears, resultMonth);
     console.log(resultSpan);
 
@@ -193,8 +196,10 @@ function outputSpan (inputFirstId, inputSecondId){
     console.log('+++++++++++++++++++++++++++++++');
 
 
-    const result = new Date(0,0,0,0,0,0,dif);
-    console.log(result);
+    resultSpan.forEach((timeUnit, i) => {
+        let str = MEASURE_UNITS[i][parseInt(timeUnit.toString().substr(-1))];
+        console.log((resultSpan[i].toString().concat(' ',str)));
+    });
 
 
 
