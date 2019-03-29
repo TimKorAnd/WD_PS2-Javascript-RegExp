@@ -1,11 +1,41 @@
 /* CONSTANTS */
-  //for task_1 regexp
+
 const TIME_IN_SECOND_VALID_REGEX = /^\d+$/;   //for task_2 seconds regexp
 const TIME_IN_HMS_VALID_REGEX = /^((0(?=\d)|1(?=\d)|2(?=[0-4]))\d):([0-5](?=\d)\d):([0-5](?=\d)\d)$/;   //for task_2 HMS regexp
 
 
 const SECONDS_IN_HMS = [60 * 60, 60, 1 ];
+/*bind a event listener with func to DOM elements*/
+function eventLoader(action, func, elementsId) {
+    elementsId.forEach((value)=>{
+        let el = document.getElementById(value);
+        el.addEventListener(action, (e) => {func.call();});
+    });
+}
 
+function startAllTask(){
+    /*for Task_1 outputSpecifiedNumbersSum()*/
+    eventLoader('input', () => outputSpecifiedNumbersSum('sum-form__btn', 'sum-form__input-1', 'sum-form__input-2'),
+        ['sum-form__input-1','sum-form__input-2','sum-form__btn']);
+
+    /*for Task_2 */
+    eventLoader('input', () => outputInHMS('time-form__hms-input', 'time-form__seconds-input' ),
+        ['time-form__seconds-input']);
+    eventLoader('input', () => outputInSeconds('time-form__seconds-input', 'time-form__hms-input' ),
+        ['time-form__hms-input']);
+    eventLoader('focus', () => validation('time-form__btn', TIME_IN_SECOND_VALID_REGEX, 'time-form__seconds-input'),
+        ['time-form__seconds-input']);
+    eventLoader('focus', () => validation('time-form__btn', TIME_IN_HMS_VALID_REGEX, 'time-form__hms-input'),
+        ['time-form__hms-input']);
+    eventLoader('keypress', (() => {if (enterPressed(event)) {outputInHMS('time-form__hms-input', 'time-form__seconds-input')}}),
+        ['time-form__seconds-input']);
+    eventLoader('keypress', (() => {if (enterPressed(event)) {outputInSeconds('time-form__seconds-input', 'time-form__hms-input')}}),
+        ['time-form__hms-input']);
+
+    /*for task_3*/
+    eventLoader('input', () => outputSpan('datetime-span-form__input-1','datetime-span-form__input-2', 'datetime-span-result'),
+        ['datetime-span-form__input-1', 'datetime-span-form__input-2']);
+}
 
 /* between two specified numbers, sum numbers only if they are ending for 2, 3, 7*/
 function outputSpecifiedNumbersSum(btnId, ...inputsId) {
@@ -136,8 +166,8 @@ function enterPressed(event) {
 }
 
 /*output a span between two date*/
-function outputSpan (inputFirstId, inputSecondId){
-    const DATETIME_VALID_REGEX = /^.+$/;   //for task_3 locale datetime regexp
+function outputSpan (inputFirstId, inputSecondId, resultOutputId){
+    const DATETIME_VALID_REGEX = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/;   //for task_3 locale datetime regexp
     const TIME_UNITS_IN_MS_ARRAY = [24*60*60*1000,60*60*1000,60*1000,1000,1];
     const MONTH_IN_YEAR = 11;
     const MEASURE_UNITS = [['лет','год','года','года','года'],
@@ -146,9 +176,11 @@ function outputSpan (inputFirstId, inputSecondId){
                             ['часов','час','часа','часа','часа'],
                             ['минут','минута','минуты','минуты','минуты'],
                             ['секунд','секунда','секунды','секунды','секунды']];
+    let resultOutput = document.getElementById(resultOutputId);
 
     if (!validation('datetime-span-form__btn', DATETIME_VALID_REGEX, [inputFirstId, inputSecondId])){
-        document.getElementById('datetime-span-result').className = 'sum-form__input--invalid'
+        resultOutput.innerText = 'введите корректную дату'
+        resultOutput.className = 'sum-form__input--invalid'
         return;
     }
     document.getElementById('datetime-span-result').className = 'sum-form__input--valid';
@@ -185,6 +217,7 @@ function outputSpan (inputFirstId, inputSecondId){
     /*add years & month in result array*/
     resultSpan.splice(0,0, resultYears, resultMonth);
     /*add measure units for output*/
+    let answerStr = '';
     resultSpan.forEach((timeUnit, i) => {
         let str = '';
         let j  = parseInt(timeUnit.toString().substr(-1));
@@ -197,10 +230,9 @@ function outputSpan (inputFirstId, inputSecondId){
         }
         str += MEASURE_UNITS[i][j];
 
-
-        console.log((resultSpan[i].toString().concat(' ',str)));
+        answerStr += ((resultSpan[i].toString().concat(' ',str,' ')));
     });
-    console.log('************************');
+    resultOutput.innerText = answerStr;
 }
 
 function test(inputId){
