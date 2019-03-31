@@ -1,9 +1,33 @@
-.sum-form__input--invalid {
+.form__input--invalid {
   color: red;
 }
-.sum-form__input--valid {
+.form__input--valid {
   color: black;
 }
 .btn--unvisible {
   visibility: hidden;
+}
+.black-cell {
+  width: 10vw;
+  height: 1vh;
+  background-color: black;
+  color: black;
+  border: 1px solid blue ;
+}
+.white-cell {
+  width: 3vw;
+  height: 1vh;
+  background-color: white;
+  color: white;
+  border: 1px solid blue;
+}
+.row {
+  display:inline;
+}
+.col {
+  display:block;
+}
+
+#chess-board-form__result-title {
+  display:block;
 }
