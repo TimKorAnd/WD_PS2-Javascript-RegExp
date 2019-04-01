@@ -290,6 +290,11 @@ function drawChessboard(inputFirstId, inputSecondId, resultOutputId) {
 }
 
 function checkLinks(inputTextId, resultOutputId){
+    const inputStr = document.getElementById(inputTextId).value;
+    const inputArray = inputStr.split(',');
+    inputArray.forEach(str => {
+        console.log(str);})
+    console.log(inputStr);
 
 }
 
