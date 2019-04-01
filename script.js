@@ -27,20 +27,28 @@ function start(){
         ['time-form__seconds-input']);
     eventLoader('focus', () => validation('time-form__btn', TIME_IN_HMS_VALID_REGEX, 'time-form__hms-input'),
         ['time-form__hms-input']);
-    eventLoader('keypress', (() => {if (enterPressed(event)) {outputInHMS('time-form__hms-input', 'time-form__seconds-input')}}),
-        ['time-form__seconds-input']);
-    eventLoader('keypress', (() => {if (enterPressed(event)) {outputInSeconds('time-form__seconds-input', 'time-form__hms-input')}}),
-        ['time-form__hms-input']);
+    eventLoader('keypress', (() => {if (enterPressed(event)) {outputInHMS('time-form__hms-input',
+        'time-form__seconds-input')}}),['time-form__seconds-input']);
+    eventLoader('keypress', (() => {if (enterPressed(event)) {outputInSeconds('time-form__seconds-input',
+        'time-form__hms-input')}}),['time-form__hms-input']);
 
     /*For task_3 datetime-locale*/
-    eventLoader('input', () => outputSpan('datetime-span-form__input-1','datetime-span-form__input-2', 'datetime-span-result'),
+    eventLoader('input', () => outputSpan('datetime-span-form__input-1',
+        'datetime-span-form__input-2', 'datetime-span-result'),
         ['datetime-span-form__input-1', 'datetime-span-form__input-2']);
 
     /*For task_4 chessboard*/
-    eventLoader('input', () => drawChessboard('chess-board-form__input-col','chess-board-form__input-row', 'chess-board-form__result-output'), ['chess-board-form__input-col','chess-board-form__input-row']);
+    eventLoader('input', () => drawChessboard('chess-board-form__input-col',
+        'chess-board-form__input-row', 'chess-board-form__result-output'),
+        ['chess-board-form__input-col','chess-board-form__input-row']);
+
+    /*For task_5 links check & sort*/
+    eventLoader('blur', () => checkLinks('links-form__text', 'links-form__result-output-title'),
+        ['links-form__text', 'links-form__result-output-title']);
+
 
     /*Run some func at start*/
-    outputSpan('datetime-span-form__input-1','datetime-span-form__input-2', 'datetime-span-result')
+    outputSpan('datetime-span-form__input-1','datetime-span-form__input-2', 'datetime-span-result');
 }
 
 /* Task_1: between two specified numbers, sum numbers only if they are ending for 2, 3, 7*/
@@ -279,6 +287,10 @@ function drawChessboard(inputFirstId, inputSecondId, resultOutputId) {
         cell.className = 'col';
         res.append(cell);
     }
+}
+
+function checkLinks(inputTextId, resultOutputId){
+
 }
 
 function test(inputId){
