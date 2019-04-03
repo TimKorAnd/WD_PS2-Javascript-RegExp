@@ -290,11 +290,17 @@ function drawChessboard(inputFirstId, inputSecondId, resultOutputId) {
 }
 
 function checkLinks(inputTextId, resultOutputId){
+    const IPv4_VALID = /^(((\d{1,3})\.){3})(\d{1,3})$/;
+    const LINK_VALID = /^(http(s?):\/\/)(www\.)?(((\w{2,63})\.)+((\w{2,63})\.?))$/i;
+    const LINK_DASH_UNDERSCORE_TEST = /--|\.-|-\.|_/;
+
     const inputStr = document.getElementById(inputTextId).value;
     const inputArray = inputStr.split(',');
     inputArray.forEach(str => {
         console.log(str);})
     console.log(inputStr);
+    //TODO range length 255
+
 
 }
 
