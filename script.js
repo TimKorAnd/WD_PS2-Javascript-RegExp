@@ -290,17 +290,49 @@ function drawChessboard(inputFirstId, inputSecondId, resultOutputId) {
 }
 
 function checkLinks(inputTextId, resultOutputId){
-    const IPv4_VALID = /^(((\d{1,3})\.){3})(\d{1,3})$/;
-    const LINK_VALID = /^(http(s?):\/\/)(www\.)?(((\w{2,63})\.)+((\w{2,63})\.?))$/i;
-    const LINK_DASH_UNDERSCORE_TEST = /--|\.-|-\.|_/;
+    const IPv4_VALID = /^(?:(?:(?:\d{1,3})\.){3})(?:\d{1,3})$/;
+    //const LINK_VALID = /^(http(s?):\/\/)(www\.)?(((\w{2,63})\.)+((\w{2,63})\.?))$/i;
+    const LINK_VALID = /^(?:http(s?):\/\/)(?:www\.)?(?:(?:(?:[-a-z0-9]{2,63})\.)+(?:(?:[-a-z0-9]{2,63})\.?))$/i;
+    const LINK_HTTPs = /^(?:http(s?):\/\/)/i;
+    const INVALID_DASH_AND_UNDERSCORE_TEST = /-(?=-)|\.(?=-)|-(?=\.)|_/;
+    const LINK_MAX_LENGTH = 255;
 
     const inputStr = document.getElementById(inputTextId).value;
     const inputArray = inputStr.split(',');
-    inputArray.forEach(str => {
-        console.log(str);})
-    console.log(inputStr);
-    //TODO range length 255
+    //const outputArray = [];
+    let outputArray = new Map();
 
+    function isValidLinkOrIPv4(str) {
+        return (IPv4_VALID.test(str)||((LINK_VALID.test(str))&&(!INVALID_DASH_AND_UNDERSCORE_TEST.test(str))&&(str.length <= LINK_MAX_LENGTH)));
+    }
+
+    inputArray.forEach(str => {
+        //console.log(str);
+        if (isValidLinkOrIPv4(str)){
+            outputArray.set(str, str.replace(LINK_HTTPs,''));
+        }
+    });
+
+    const outputDiv = document.getElementById(resultOutputId);
+
+    outputArray =  new Map([...outputArray.entries()].sort((a, b) => {
+        let x = a[1].toLowerCase();
+        let y = b[1].toLowerCase();
+        if (x < y) {return -1;}
+        if (x > y) {return 1;}
+        return 0;
+    }));
+
+    outputArray.forEach((value, key) =>{
+        const link = document.createElement('a');
+        link.className = 'col';
+        link.setAttribute('href',key);
+        link.setAttribute('target', '_blank');
+        link.innerHTML = value;
+        outputDiv.appendChild(link);
+    });
+
+    //console.log(outputArray);
 
 }
 
