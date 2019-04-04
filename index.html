@@ -6,6 +6,7 @@
 </head>
 <body onload="start()">
 <h1 >WD_PS2 Javascript + RegExp</h1>
+<!--////////////////////_1_Sum numbers ends 2,3,7 //////////////////-->
 <h2 >Task 1. Sum numbers ends 2,3,7 </h2>
 <form class="sum-form" id="sum-form">
   <fieldset>
@@ -27,8 +28,7 @@
     </div>
   </fieldset>
 </form>
-
-
+<!--////////////////////_2_Time transformation sec <> HMS //////////////////-->
 <h2 >Task 2. Time transformation seconds </h2>
 <form class="time-trans-form" id="time-form">
   <fieldset>
@@ -50,7 +50,7 @@
     </div>
   </fieldset>
 </form>
-<!--////////////////////DATETIME-LOCALE//////////////////-->
+<!--////////////////////_3_DATETIME-LOCALE//////////////////-->
 <h2 >Task 3. Calculate the time span between two date </h2>
 <form class="time-span-form" id="time-span" >
   <fieldset>
@@ -58,7 +58,7 @@
     <div>
       <label for="datetime-span-form__input-1" title="please enter date & time">Date & time 1:</label>
       <input type="datetime-local" class=date"time-span-form__input" id="datetime-span-form__input-1" placeholder="enter first date & time"
-             title="date & time in YY:MM:DD:HH:MM:SS" value="2018-01-01T00:01">
+             title="date & time in YY:MM:DD:HH:MM:SS" value="2019-01-01T00:01">
     </div>
     <div>
       <label for="datetime-span-form__input-2" title="please enter date & time">Date & time 2:</label>
@@ -72,7 +72,7 @@
     </div>
   </fieldset>
 </form>
-<!--///////////////////CHESSBOARD/////////////////////////-->
+<!--///////////////////_4_CHESSBOARD/////////////////////////-->
 <h2 >Task 4. Chess board </h2>
 <form class="chess-board-form" id="chess-board-form">
   <fieldset>
@@ -97,7 +97,8 @@
   </fieldset>
 </form>
 
-
+<!--///////////////////_5_LINKS_CHECK/////////////////////////-->
+<h2 >Task_5 links & IPv4 check & sort </h2>
 <form class="links-form" id="links-form">
   <fieldset>
     <legend >Task_5 links</legend>
@@ -105,10 +106,33 @@
       <textarea class="links-form__text" id="links-form__text" placeholder="enter links here" cols="64" rows="8"></textarea>
     </div>
     <div id="links-form__result-output">
-      <p id="links-form__result-output-title">there will be a chessboard specified size</p>
+      <p id="links-form__result-output-title">there will be a links w/o protocol</p>
     </div>
   </fieldset>
 </form>
+
+<!--///////////////////_6_MARK_MATCHING/////////////////////////-->
+<h2 >Task_6 mark matching text </h2>
+<form class="mark-text-form" id="mark-text-form">
+  <fieldset>
+    <legend >Task_6 highlight matching text</legend>
+    <div>
+      <textarea class="mark-text-form__text" id="mark-text-form__text" placeholder="enter text here" cols="64" rows="8"></textarea>
+    </div>
+    <div>
+      <label for="mark-text-form__input-regexp" title="please enter only integer number">Enter regexp:</label>
+      <input type="text" class="mark-text-form__input-regexp" id="mark-text-form__input-regexp" placeholder="enter regexp"
+             title="please enter regexp">
+    </div>
+    <button id="mark-text-form__btn" type="button" class="form__btn btn--visible">Mark it</button>
+    <div id="mark-text-form__result-output">
+      <p id="mark-text-form__result-output-title">there will be a highlighted text from form below</p>
+    </div>
+  </fieldset>
+</form>
+
+
+
 
 <button type="button"
         onclick="f()">
