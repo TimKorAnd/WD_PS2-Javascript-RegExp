@@ -3,6 +3,7 @@
 const TIME_IN_SECOND_VALID_REGEX = /^\d+$/;   //for task_2 seconds regexp
 const TIME_IN_HMS_VALID_REGEX = /^((0(?=\d)|1(?=\d)|2(?=[0-4]))\d):([0-5](?=\d)\d):([0-5](?=\d)\d)$/;   //for task_2 HMS regexp
 const SECONDS_IN_HMS = [60 * 60, 60, 1 ];
+const NOT_EMPTY_VALID = /^.+$/; // for task_6 regexp
 
 /*bind a event listener with specified func to each from array of DOM elements*/
 function eventLoader(action, func, elementsId) {
@@ -51,11 +52,18 @@ function start(){
     eventLoader('click', () => outputMarkedText('mark-text-form__text', 'mark-text-form__input-regexp',
         'mark-text-form__result-output-title'),
         ['mark-text-form__btn']);
+    eventLoader('input', () => outputMarkedText('mark-text-form__text', 'mark-text-form__input-regexp',
+        'mark-text-form__result-output-title'),
+        ['mark-text-form__text','mark-text-form__input-regexp']);
+    /*eventLoader('input', () => validation('mark-text-form__btn', NOT_EMPTY_VALID,
+        ['mark-text-form__text','mark-text-form__input-regexp']),
+        ['mark-text-form__text','mark-text-form__input-regexp']);*/
 
     /*/!*Run some func at start*!/
     outputSpan('datetime-span-form__input-1','datetime-span-form__input-2', 'datetime-span-result');*/
 }
 
+////////////////////TASK_1_Sum numbers ends 2,3,7 //////////////////
 /* Task_1: between two specified numbers, sum numbers only if they are ending for 2, 3, 7*/
 function outputSpecifiedNumbersSum(btnId, ...inputsId) {
     const NUMBER_VALID_REGEX = /^-?\d+$/;
@@ -94,7 +102,8 @@ function outputSpecifiedNumbersSum(btnId, ...inputsId) {
     const resultOutput = document.getElementById('sum-form__result-output');
     resultOutput.innerText = sumSpecNum(numberFirst, numberSecond);
 }
-/*validation
+
+/*validation for 1,2,3,4,6 task
 * return true if all inputs valid, false if not;
 * btnId - btn for activate/deactivate
 * regTemplate - reg.expression for test inputs
@@ -126,6 +135,7 @@ function validation(btnId, regTemplate, inputsId){
     return isAllInputsValid;
 }
 
+////////////////////TASK_2_Time transformation sec > HMS //////////////////
 /*output in hms*/
 function outputInHMS(outputId, inputId){
     let timeInSecond = document.getElementById(inputId).value;
@@ -155,6 +165,7 @@ function outputInHMS(outputId, inputId){
 
 }
 
+////////////////////TASK_2_Time transformation HMS > sec //////////////////
 /*output seconds*/
 function outputInSeconds(outputId, inputId){
 
@@ -184,6 +195,7 @@ function enterPressed(event) {
     return (event.which == 13 || event.keyCode == 13);
 }
 
+////////////////////_3_DATETIME-LOCALE//////////////////
 /*output a span between two date*/
 function outputSpan (inputFirstId, inputSecondId, resultOutputId){
     const DATETIME_VALID_REGEX = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/;   //for task_3 locale datetime regexp
@@ -260,7 +272,7 @@ function outputSpan (inputFirstId, inputSecondId, resultOutputId){
     resultOutput.innerText = answerStr;
 }
 
-/*Task_4 Chessboard*/
+///////////////////TASK_4_CHESSBOARD/////////////////////////
 function drawChessboard(inputFirstId, inputSecondId, resultOutputId) {
     const CHESSBOARD_SIZE_VALID = /^\d+$/;
     const MAX_SIZE = 200;
@@ -293,7 +305,7 @@ function drawChessboard(inputFirstId, inputSecondId, resultOutputId) {
         res.append(cell);
     }
 }
-
+///////////////////TASK_5_LINKS_CHECK/////////////////////////
 function outputCheckedLinksWithoutHTTPs(inputTextId, resultOutputId){
     const IPv4_VALID = /^(?:(?:(?:\d{1,3})\.){3})(?:\d{1,3})$/;
     //const LINK_VALID = /^(http(s?):\/\/)(www\.)?(((\w{2,63})\.)+((\w{2,63})\.?))$/i;
@@ -336,33 +348,46 @@ function outputCheckedLinksWithoutHTTPs(inputTextId, resultOutputId){
         link.innerText = value;
         outputDiv.appendChild(link);
     });
-
-    //console.log(outputArray);
-
 }
-
+///////////////////TASK_6_MARK_MATCHING/////////////////////////
 function outputMarkedText(inputTextId, inputRegexpId,resultOutputId) {
     const inputStr = document.getElementById(inputTextId).value;
-    const inputRegExp = new RegExp(document.getElementById(inputRegexpId).value,'g');
-    //validation
     const resultOutputEl = document.getElementById(resultOutputId);
-    let marked;
-    while ((marked = inputRegExp.exec(inputStr)) !== null){
-
+    const labelEl = document.getElementById('mark-text-form__input-regexp-label');
+    let inputRegExp;
+    /*regexp or string searching for mark*/
+    try {
+        inputRegExp = new RegExp(document.getElementById(inputRegexpId).value,'g');
+        labelEl.innerText = 'now regExp searching';
+    } catch {
+        labelEl.innerText = 'now just string searching';
+        inputRegExp = new RegExp(document.getElementById(inputRegexpId).value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),'g')
     }
 
+    /*validation*/
+    if (!validation('mark-text-form__btn', NOT_EMPTY_VALID,['mark-text-form__text','mark-text-form__input-regexp'])){
+        resultOutputEl.innerHTML = 'please, enter strings in empty fields';
+        return;
+    }
 
-    //const resultText = document.createElement('p');
-    resultOutputEl.innerText = inputRegExp + inputStr;
+    let resultStr = inputStr;
+    /*insert string into target from specified index*/
+    function insert(targetStr, indexForInsertion, insertingStr) {
+        return targetStr.substr(0, indexForInsertion) + insertingStr + targetStr.substr(indexForInsertion);
+    }
+    /*array for matched by regexpr result*/
+    let marked;
+    /*correction for <mark>.length=6 </mark>.length=7 tegs length*/
+    let totalLengthMarkTegCorrection = 0;
 
-}
+    while ((marked = inputRegExp.exec(inputStr)) !== null){
+        resultStr = insert(resultStr, inputRegExp.lastIndex - marked[0].length + totalLengthMarkTegCorrection, '<mark>');
+        totalLengthMarkTegCorrection += 6;
+        resultStr = insert(resultStr, inputRegExp.lastIndex + totalLengthMarkTegCorrection, '</mark>');
+        totalLengthMarkTegCorrection += 7;
+    }
 
-function test(inputId){
-    const obj = {name:"tim", age:39};
-    obj.passion = 'codding';
+    resultOutputEl.innerHTML = '<p>'+resultStr+'</p>';
 
-    console.log(document.getElementById('datetime-span-form__input-2') .value);
-    console.log(ms);
-    //alert(dateTimeInput.value);
 }
 
