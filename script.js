@@ -343,11 +343,17 @@ function outputCheckedLinksWithoutHTTPs(inputTextId, resultOutputId){
 
 function outputMarkedText(inputTextId, inputRegexpId,resultOutputId) {
     const inputStr = document.getElementById(inputTextId).value;
-    const regExp = new RegExp(document.getElementById(inputRegexpId).value);
-    //const resultOutput = document.getElementById(resultOutputId).value;
-    const resultOutput = document.getElementById(inputTextId).value;
+    const inputRegExp = new RegExp(document.getElementById(inputRegexpId).value,'g');
+    //validation
+    const resultOutputEl = document.getElementById(resultOutputId);
+    let marked;
+    while ((marked = inputRegExp.exec(inputStr)) !== null){
+
+    }
+
+
     //const resultText = document.createElement('p');
-    document.getElementById(inputTextId).value = regExp + inputStr;
+    resultOutputEl.innerText = inputRegExp + inputStr;
 
 }
 
