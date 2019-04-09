@@ -381,7 +381,7 @@ function outputMarkedText(inputTextId, inputRegexpId,resultOutputId) {
     /*correction for <mark>.length=6 </mark>.length=7 tegs length*/
     let totalLengthMarkTegCorrection = 0;
 
-    while ((marked = inputRegExp.exec(inputStr)) !== null){
+    while ((marked = inputRegExp.exec(inputStr)) !== null && marked[0] !==''){
         resultStr = insert(resultStr, inputRegExp.lastIndex - marked[0].length + totalLengthMarkTegCorrection, '<mark>');
         totalLengthMarkTegCorrection += '<mark>'.length;
         resultStr = insert(resultStr, inputRegExp.lastIndex + totalLengthMarkTegCorrection, '</mark>');
