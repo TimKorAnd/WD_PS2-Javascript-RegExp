@@ -3,7 +3,7 @@
 const TIME_IN_SECOND_VALID_REGEX = /^\d+$/;   //for task_2 seconds regexp
 const TIME_IN_HMS_VALID_REGEX = /^((0(?=\d)|1(?=\d)|2(?=[0-4]))\d):([0-5](?=\d)\d):([0-5](?=\d)\d)$/;   //for task_2 HMS regexp
 const SECONDS_IN_HMS = [60 * 60, 60, 1 ];
-const NOT_EMPTY_VALID = /^.+$/; // for task_6 regexp
+const NOT_EMPTY_VALID = /^.+|\w|\W$/; // for task_6 regexp
 
 /*bind a event listener with specified func to each from array of DOM elements*/
 function eventLoader(action, func, elementsId) {
@@ -361,6 +361,7 @@ function outputMarkedText(inputTextId, inputRegexpId,resultOutputId) {
         labelEl.innerText = 'now regExp searching';
     } catch {
         labelEl.innerText = 'now just string searching';
+        /*escape spec. symbols*/
         inputRegExp = new RegExp(document.getElementById(inputRegexpId).value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),'g')
     }
 
@@ -382,9 +383,9 @@ function outputMarkedText(inputTextId, inputRegexpId,resultOutputId) {
 
     while ((marked = inputRegExp.exec(inputStr)) !== null){
         resultStr = insert(resultStr, inputRegExp.lastIndex - marked[0].length + totalLengthMarkTegCorrection, '<mark>');
-        totalLengthMarkTegCorrection += 6;
+        totalLengthMarkTegCorrection += '<mark>'.length;
         resultStr = insert(resultStr, inputRegExp.lastIndex + totalLengthMarkTegCorrection, '</mark>');
-        totalLengthMarkTegCorrection += 7;
+        totalLengthMarkTegCorrection += '</mark>'.length;
     }
 
     resultOutputEl.innerHTML = '<p>'+resultStr+'</p>';
