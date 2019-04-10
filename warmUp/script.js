@@ -2,8 +2,8 @@
 
 const TIME_IN_SECOND_VALID_REGEX = /^\d+$/;   //for task_2 seconds regexp
 const TIME_IN_HMS_VALID_REGEX = /^((0(?=\d)|1(?=\d)|2(?=[0-4]))\d):([0-5](?=\d)\d):([0-5](?=\d)\d)$/;   //for task_2 HMS regexp
-const SECONDS_IN_HMS = [60 * 60, 60, 1 ];
-const NOT_EMPTY_VALID = /^.+|\w|\W$/; // for task_6 regexp
+const SECONDS_IN_HMS = [60 * 60, 60, 1 ]; //for task_2 HMS
+
 
 /*bind a event listener with specified func to each from array of DOM elements*/
 function eventLoader(action, func, elementsId) {
@@ -144,7 +144,7 @@ function outputInHMS(outputId, inputId){
         resultTimeTransform.placeholder =  'enter correct seconds';
         resultTimeTransform.className = 'form__input--invalid';
         return;
-    };
+    }
     /*transfer from second to hms*/
     function transferFromSecond() {
         let arrayHMS = SECONDS_IN_HMS.map((item) => {
@@ -154,7 +154,7 @@ function outputInHMS(outputId, inputId){
         });
 
         arrayHMS.forEach((x, j) => {
-            arrayHMS[j] = (x.toString().padStart(2, '0'));
+            arrayHMS[j] = ''+(x.toString().padStart(2, '0'));
         });
 
         resultTimeTransform.value = arrayHMS.join(':');
@@ -215,8 +215,8 @@ function outputSpan (inputFirstId, inputSecondId, resultOutputId){
     let resultOutput = document.getElementById(resultOutputId);
 
     if (!validation('datetime-span-form__btn', DATETIME_VALID_REGEX, [inputFirstId, inputSecondId])){
-        resultOutput.innerText = 'введите корректную дату'
-        resultOutput.className = 'form__input--invalid'
+        resultOutput.innerText = 'введите корректную дату';
+        resultOutput.className = 'form__input--invalid';
         return;
     }
     //document.getElementById('datetime-span-result').className = 'form__input--valid';
@@ -274,18 +274,17 @@ function outputSpan (inputFirstId, inputSecondId, resultOutputId){
 
 ///////////////////TASK_4_CHESSBOARD/////////////////////////
 function drawChessboard(inputFirstId, inputSecondId, resultOutputId) {
-    const CHESSBOARD_SIZE_VALID = /^\d+$/;
-    const MAX_SIZE = 200;
+    const CHESSBOARD_SIZE_VALID = /^(?:0*(?:0|1)?\d?\d)$/;
     let resultOutput = document.getElementById(resultOutputId);
     if (!validation('chess-board-form__btn', CHESSBOARD_SIZE_VALID, [inputFirstId, inputSecondId])){
         resultOutput.innerText = 'enter correct chessboard size';
-        resultOutput.className = 'form__input--invalid'
+        resultOutput.className = 'form__input--invalid';
         return;
     }
     resultOutput.className = 'form__input--valid';
     resultOutput.innerText = '';
 
-    let colNum = document.getElementById(inputFirstId).value;
+    let colNum = document.getElementById(inputFirstId).value ;
     let rowNum = document.getElementById(inputSecondId).value;
     const res = document.getElementById(resultOutputId);
     for (let row = 0; row < rowNum; row ++) {
@@ -316,6 +315,7 @@ function outputCheckedLinksWithoutHTTPs(inputTextId, resultOutputId){
 
     const inputStr = document.getElementById(inputTextId).value;
     const inputArray = inputStr.split(',');
+    inputArray.forEach((value,i) => {inputArray[i] = value.trim();});
     //const outputArray = [];
     let outputArray = new Map();
 
@@ -351,6 +351,7 @@ function outputCheckedLinksWithoutHTTPs(inputTextId, resultOutputId){
 }
 ///////////////////TASK_6_MARK_MATCHING/////////////////////////
 function outputMarkedText(inputTextId, inputRegexpId,resultOutputId) {
+    const NOT_EMPTY_VALID = /^.+|\w|\W$/; // for task_6 regexp
     const inputStr = document.getElementById(inputTextId).value;
     const resultOutputEl = document.getElementById(resultOutputId);
     const labelEl = document.getElementById('mark-text-form__input-regexp-label');

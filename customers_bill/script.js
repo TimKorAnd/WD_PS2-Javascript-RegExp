@@ -46,7 +46,7 @@ function searchByName(event) {
     let searchRegExp;
 
     try {
-        searchRegExp = new RegExp(event.target.value,'gi');
+        searchRegExp = new RegExp(event.target.value,'i');
     } catch {
         /*escape spec. symbols*/
         searchRegExp = new RegExp(event.target.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),'gi')
