@@ -4,7 +4,7 @@ const TIME_IN_SECOND_VALID_REGEX = /^\d+$/;   //for task_2 seconds regexp
 const TIME_IN_HMS_VALID_REGEX = /^((0(?=\d)|1(?=\d)|2(?=[0-4]))\d):([0-5](?=\d)\d):([0-5](?=\d)\d)$/;   //for task_2 HMS regexp
 const SECONDS_IN_HMS = [60 * 60, 60, 1 ]; //for task_2 HMS
 
-
+window.onload = () => {start()};
 /*bind a event listener with specified func to each from array of DOM elements*/
 function eventLoader(action, func, elementsId) {
     elementsId.forEach((value)=>{
@@ -55,12 +55,6 @@ function start(){
     eventLoader('input', () => outputMarkedText('mark-text-form__text', 'mark-text-form__input-regexp',
         'mark-text-form__result-output-title'),
         ['mark-text-form__text','mark-text-form__input-regexp']);
-    /*eventLoader('input', () => validation('mark-text-form__btn', NOT_EMPTY_VALID,
-        ['mark-text-form__text','mark-text-form__input-regexp']),
-        ['mark-text-form__text','mark-text-form__input-regexp']);*/
-
-    /*/!*Run some func at start*!/
-    outputSpan('datetime-span-form__input-1','datetime-span-form__input-2', 'datetime-span-result');*/
 }
 
 ////////////////////TASK_1_Sum numbers ends 2,3,7 //////////////////

@@ -41,6 +41,7 @@ const SORT_ARROW_DOWN = '▼';
 let tableBody = document.getElementById('tbody');
 let total = document.getElementById('total');
 
+window.onload = () => {eventsLoader()};
 
 function searchByName(event) {
     let searchRegExp;
