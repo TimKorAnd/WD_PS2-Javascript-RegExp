@@ -54,11 +54,7 @@ function searchByName(event) {
     }
 
     GOODS.forEach((currGood, i) =>{
-        if (searchRegExp.test(currGood.name)) {
-            GOODS[i].searched = true;
-        } else {
-            GOODS[i].searched = false;
-        }
+        GOODS[i].searched = searchRegExp.test(currGood.name);
     });
     viewTable();
 
